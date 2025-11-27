@@ -1,0 +1,38 @@
+### Test User CRUD API
+
+### 1. Create User
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "john.doe@example.com",
+  "name": "John Doe",
+  "password": "password123"
+}
+
+### 2. Get All Users
+GET http://localhost:3000/users
+
+### 3. Get User by ID
+GET http://localhost:3000/users/1
+
+### 4. Update User
+PATCH http://localhost:3000/users/1
+Content-Type: application/json
+
+{
+  "name": "John Updated"
+}
+
+### 5. Test Validation Error
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "email": "invalid-email",
+  "name": "A",
+  "password": "123"
+}
+
+### 6. Delete User
+DELETE http://localhost:3000/users/1
