@@ -19,7 +19,25 @@
   <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
 </p>
   <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest# 🚀 NestJS Project
+
+## 📚 Documentation
+
+Tất cả documentation đã được tổ chức trong folder `docs/`:
+
+### 🎓 **Learning Resources**
+
+- **`docs/learning/01-nestjs-basics.md`** - NestJS fundamentals cho Laravel developers
+
+### ⚙️ **Setup Guides**
+
+- **`docs/setup/01-mysql-setup.md`** - MySQL configuration và environment setup
+
+### 🚀 **API Documentation**
+
+- **`docs/api/01-user-crud.http`** - User CRUD API testing endpoints
+
+Xem **[📖 Full Documentation](./docs/README.md)** để có chi tiết đầy đủ.
 
 ## Description
 
