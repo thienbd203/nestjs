@@ -38,6 +38,11 @@ export class UsersService {
     return user;
   }
 
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await this.usersRepository.findOne({ where: { email } });
+    return user || null; // Return null cho authentication flow (không throw exception)
+  }
+
   async update(id: number, updateUserDto: UpdateUserDto): Promise<User> {
     const user = await this.findOne(id);
 

@@ -4,6 +4,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -27,7 +28,7 @@ import { UsersModule } from './users/users.module';
             type: 'sqlite',
             database: 'data.sqlite',
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
-            synchronize: configService.get('NODE_ENV') === 'development',
+            synchronize: true, // ✅ NestJS docs standard cho development
           } as TypeOrmModuleOptions;
         }
 
@@ -39,13 +40,15 @@ import { UsersModule } from './users/users.module';
           password: configService.get('DB_PASSWORD', ''),
           database: configService.get('DB_DATABASE', 'nestjs_db'),
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
-          synchronize: configService.get('NODE_ENV') === 'development',
+          synchronize: true, // ✅ NestJS docs standard cho development
         } as TypeOrmModuleOptions;
       },
       inject: [ConfigService],
     }),
 
     UsersModule,
+
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
