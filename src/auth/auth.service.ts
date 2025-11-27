@@ -37,4 +37,10 @@ export class AuthService {
       access_token: token,
     };
   }
+
+  async getProfile(access_token: string): Promise<User> {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-type-assertion
+    const decoded = this.jwtService.decode(access_token) as AuthenticatedUser;
+    return this.usersService.findOne(decoded.sub);
+  }
 }
