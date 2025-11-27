@@ -20,8 +20,6 @@ export class UsersController {
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     const user = await this.usersService.create(createUserDto);
-    // Remove password từ response (tương tự Laravel $hidden)
-    delete user.password;
 
     return {
       success: true,
@@ -33,8 +31,6 @@ export class UsersController {
   @Get()
   async findAll() {
     const users = await this.usersService.findAll();
-    // Remove password từ tất cả users
-    users.forEach((user) => delete user.password);
 
     return {
       success: true,
@@ -46,8 +42,6 @@ export class UsersController {
   @Get(':id')
   async findOne(@Param('id') id: string) {
     const user = await this.usersService.findOne(+id);
-    // Remove password từ response
-    delete user.password;
 
     return {
       success: true,
@@ -59,8 +53,6 @@ export class UsersController {
   @Patch(':id')
   async update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
     const user = await this.usersService.update(+id, updateUserDto);
-    // Remove password từ response
-    delete user.password;
 
     return {
       success: true,

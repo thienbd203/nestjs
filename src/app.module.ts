@@ -1,20 +1,18 @@
+// app.module.ts
 import { Module } from '@nestjs/common';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-    // Load environment variables (tương tự Laravel .env)
+    // Bỏ dotenv.config() đi, ConfigModule sẽ tự load
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',
     }),
 
-    // TypeORM với dynamic config từ .env
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
       useFactory: (configService: ConfigService): TypeOrmModuleOptions => {
@@ -26,31 +24,34 @@ import { AuthModule } from './auth/auth.module';
         if (dbType === 'sqlite') {
           return {
             type: 'sqlite',
-            database: 'data.sqlite',
+            database: configService.get<string>(
+              'DB_SQLITE_PATH',
+              'data.sqlite',
+            ),
             entities: [__dirname + '/**/*.entity{.ts,.js}'],
-            synchronize: true, // ✅ NestJS docs standard cho development
-          } as TypeOrmModuleOptions;
+            synchronize: true,
+            logging: true,
+          };
         }
 
+        // DÙNG configService, KHÔNG dùng process.env
         return {
-          type: 'mysql' as const,
-          host: configService.get('DB_HOST', 'localhost'),
-          port: configService.get<number>('DB_PORT', 3306),
-          username: configService.get('DB_USERNAME', 'root'),
-          password: configService.get('DB_PASSWORD', ''),
-          database: configService.get('DB_DATABASE', 'nestjs_db'),
+          type: 'mysql',
+          host: configService.get<string>('DB_HOST'),
+          port: configService.get<number>('DB_PORT', 3306), // có default
+          username: configService.get<string>('DB_USERNAME'),
+          password: configService.get<string>('DB_PASSWORD'),
+          database: configService.get<string>('DB_DATABASE'),
           entities: [__dirname + '/**/*.entity{.ts,.js}'],
-          synchronize: true, // ✅ NestJS docs standard cho development
+          synchronize: true, // dev only
+          logging: true,
         } as TypeOrmModuleOptions;
       },
       inject: [ConfigService],
     }),
 
     UsersModule,
-
     AuthModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
 })
 export class AppModule {}
